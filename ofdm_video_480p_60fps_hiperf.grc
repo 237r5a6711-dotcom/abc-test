@@ -1,0 +1,418 @@
+options:
+  parameters:
+    author: ''
+    category: Custom
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: OFDM Video Transmission - 480p @ 60fps (High Performance)
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: ofdm_video_480p_60fps_hiperf
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: '1'
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: OFDM Video 480p 60fps High Performance
+    window_size: 1920, 1080
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 12.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: fft_len
+  id: variable
+  parameters:
+    comment: ''
+    value: '512'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [408, 20.0]
+    rotation: 0
+    state: enabled
+- name: len_tag_key
+  id: variable
+  parameters:
+    comment: ''
+    value: '"packet_len"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 20.0]
+    rotation: 0
+    state: enabled
+- name: packet_len
+  id: variable
+  parameters:
+    comment: ''
+    value: '8192'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 20.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '20000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [504, 12.0]
+    rotation: 0
+    state: enabled
+- name: blocks_stream_to_tagged_stream_0
+  id: blocks_stream_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_tag_key: len_tag_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    packet_len: packet_len
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 305]
+    rotation: 0
+    state: enabled
+- name: blocks_tag_debug_0
+  id: blocks_tag_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    display: 'False'
+    filter: '""'
+    name: Rx Packets
+    num_inputs: '1'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1415, 300]
+    rotation: 0
+    state: disabled
+- name: blocks_throttle_0
+  id: blocks_throttle
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848, 210]
+    rotation: 0
+    state: enabled
+- name: digital_ofdm_rx_0
+  id: digital_ofdm_rx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    cp_len: fft_len//8
+    fft_len: fft_len
+    header_mod: '"BPSK"'
+    log: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    occupied_carriers: (list(range(-220, -105)) + list(range(-104, -53)) + list(range(-52,
+      -21)) + list(range(-20, -7)) + list(range(-6, 0)) + list(range(1, 7)) + list(range(8,
+      21)) + list(range(22, 53)) + list(range(54, 105)) + list(range(106, 221)),)
+    packet_len_key: len_tag_key
+    payload_mod: '"64QAM"'
+    pilot_carriers: ((-220, -104, -52, -20, -6, 7, 21, 53, 105, 220),)
+    pilot_symbols: ((1, 1, 1, -1, -1, 1, 1, -1, 1, -1),)
+    scramble_bits: 'False'
+    sync_word1: None
+    sync_word2: None
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1088, 176]
+    rotation: 0
+    state: enabled
+- name: digital_ofdm_tx_0
+  id: digital_ofdm_tx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    cp_len: fft_len//8
+    fft_len: fft_len
+    header_mod: '"BPSK"'
+    log: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    occupied_carriers: (list(range(-220, -105)) + list(range(-104, -53)) + list(range(-52,
+      -21)) + list(range(-20, -7)) + list(range(-6, 0)) + list(range(1, 7)) + list(range(8,
+      21)) + list(range(22, 53)) + list(range(54, 105)) + list(range(106, 221)),)
+    packet_len_key: len_tag_key
+    payload_mod: '"64QAM"'
+    pilot_carriers: ((-220, -104, -52, -20, -6, 7, 21, 53, 105, 220),)
+    pilot_symbols: ((1, 1, 1, -1, -1, 1, 1, -1, 1, -1),)
+    rolloff: '0'
+    scramble_bits: 'False'
+    sync_word1: None
+    sync_word2: None
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 92]
+    rotation: 0
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np\nimport cv2\nfrom gnuradio import gr\nimport\
+      \ threading\nimport queue\nimport time\n\nclass LiveVideoTransmitter(gr.sync_block):\n\
+      \    \"\"\"\n    Ultra high-performance webcam video transmitter for 480p @\
+      \ 60fps\n    Optimized for maximum throughput with minimal overhead\n    \"\"\
+      \"\n    def __init__(self, camera_index=0, frame_width=640, frame_height=480,\
+      \ fps_target=60, frame_skip=1):\n        gr.sync_block.__init__(\n        \
+      \    self,\n            name=\"LiveVideoTransmitter_HiPerf\",\n            in_sig=None,\n\
+      \            out_sig=[np.uint8]\n        )\n        \n        # Parameters\n\
+      \        self.camera_index = int(camera_index)\n        self.frame_width = int(frame_width)\n\
+      \        self.frame_height = int(frame_height)\n        self.fps_target = float(fps_target)\n\
+      \        self.frame_skip = max(1, int(frame_skip))  # Skip frames to reduce\
+      \ data\n        \n        # Thread-safe frame queue with larger buffer\n   \
+      \     self.frame_queue = queue.Queue(maxsize=30)\n        self.capture_thread\
+      \ = None\n        self.running = False\n        self.current_frame = None\n\
+      \        self.frame_pos = 0\n        self.frames_captured = 0\n        self.frames_sent\
+      \ = 0\n        \n    def _capture_loop(self):\n        \"\"\"Background thread\
+      \ for camera capture with frame skipping\"\"\"\n        cap = cv2.VideoCapture(self.camera_index)\n\
+      \        if not cap.isOpened():\n            print(f\"ERROR: Cannot open camera\
+      \ {self.camera_index}\")\n            return\n            \n        # Configure\
+      \ camera for maximum performance\n        cap.set(cv2.CAP_PROP_FRAME_WIDTH,\
+      \ self.frame_width)\n        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)\n\
+      \        cap.set(cv2.CAP_PROP_FPS, self.fps_target)\n        cap.set(cv2.CAP_PROP_BUFFERSIZE,\
+      \ 1)  # Minimize latency\n        \n        # Use MJPEG for higher FPS support\n\
+      \        cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M','J','P','G'))\n\
+      \        \n        # Performance settings\n        cap.set(cv2.CAP_PROP_AUTOFOCUS,\
+      \ 0)  # Disable autofocus for speed\n        cap.set(cv2.CAP_PROP_AUTO_EXPOSURE,\
+      \ 1)  # Use auto exposure\n        \n        frame_interval = 1.0 / self.fps_target\n\
+      \        next_frame_time = time.time()\n        frame_counter = 0\n        \n\
+      \        print(f\"Camera opened: {self.frame_width}x{self.frame_height} @\
+      \ {self.fps_target}fps, skip={self.frame_skip}\")\n        \n        while self.running:\n\
+      \            ret, frame = cap.read()\n            if not ret or frame is None:\n\
+      \                time.sleep(0.001)\n                continue\n            \n\
+      \            self.frames_captured += 1\n            frame_counter += 1\n   \
+      \         \n            # Skip frames if configured\n            if self.frame_skip\
+      \ > 1 and frame_counter % self.frame_skip != 0:\n                continue\n\
+      \            \n            # Convert to grayscale (fast)\n            if frame.ndim\
+      \ == 3:\n                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)\n  \
+      \          else:\n                gray = frame\n            \n            # Resize\
+      \ if needed (fast linear interpolation)\n            if gray.shape[1] != self.frame_width\
+      \ or gray.shape[0] != self.frame_height:\n                gray = cv2.resize(gray,\
+      \ (self.frame_width, self.frame_height), \n                              \
+      \        interpolation=cv2.INTER_LINEAR)\n            \n            # Convert\
+      \ to contiguous byte array\n            frame_bytes = np.ascontiguousarray(gray.ravel().astype(np.uint8))\n\
+      \            \n            # Add to queue (non-blocking, drop if full)\n   \
+      \         try:\n                self.frame_queue.put(frame_bytes, block=False)\n\
+      \                self.frames_sent += 1\n            except queue.Full:\n   \
+      \             # Queue full, skip this frame\n                pass\n         \
+      \   \n            # Frame rate control\n            next_frame_time += frame_interval\
+      \ / self.frame_skip\n            sleep_time = next_frame_time - time.time()\n\
+      \            if sleep_time > 0:\n                time.sleep(sleep_time)\n  \
+      \          else:\n                # Running behind, reset timing\n         \
+      \       next_frame_time = time.time()\n        \n        cap.release()\n   \
+      \     print(f\"Camera closed. Captured: {self.frames_captured}, Sent: {self.frames_sent}\"\
+      )\n        \n    def start(self):\n        \"\"\"Start camera capture thread\"\
+      \"\"\n        self.running = True\n        self.frames_captured = 0\n      \
+      \  self.frames_sent = 0\n        self.capture_thread = threading.Thread(target=self._capture_loop,\
+      \ daemon=True)\n        self.capture_thread.start()\n        return super().start()\n\
+      \        \n    def work(self, input_items, output_items):\n        \"\"\"Produce\
+      \ output samples - optimized for speed\"\"\"\n        out = output_items[0]\n\
+      \        n = len(out)\n        \n        if n == 0:\n            return 0\n\
+      \            \n        # Try to get new frames from queue (drain quickly)\n \
+      \       latest_frame = None\n        consumed = 0\n        while consumed <\
+      \ 5 and not self.frame_queue.empty():  # Max 5 frames per work call\n      \
+      \      try:\n                latest_frame = self.frame_queue.get_nowait()\n\
+      \                consumed += 1\n            except queue.Empty:\n          \
+      \      break\n        \n        # Use latest frame if we got one\n        if\
+      \ latest_frame is not None:\n            self.current_frame = latest_frame\n\
+      \            self.frame_pos = 0\n        \n        # If no frame available, output\
+      \ zeros\n        if self.current_frame is None:\n            out[:] = 0\n  \
+      \          return n\n            \n        frame_len = len(self.current_frame)\n\
+      \        pos = 0\n        \n        # Fast fill: copy data in chunks\n     \
+      \   while pos < n:\n            remaining_in_frame = frame_len - self.frame_pos\n\
+      \            remaining_in_output = n - pos\n            \n            if remaining_in_frame\
+      \ <= 0:\n                # Frame exhausted, repeat from beginning\n        \
+      \        self.frame_pos = 0\n                remaining_in_frame = frame_len\n\
+      \            \n            # Copy chunk (vectorized)\n            chunk_size\
+      \ = min(remaining_in_frame, remaining_in_output)\n            out[pos:pos+chunk_size]\
+      \ = self.current_frame[self.frame_pos:self.frame_pos+chunk_size]\n        \
+      \    pos += chunk_size\n            self.frame_pos += chunk_size\n        \n\
+      \        return n\n        \n    def stop(self):\n        \"\"\"Stop camera\
+      \ capture\"\"\"\n        self.running = False\n        if self.capture_thread\
+      \ is not None:\n            self.capture_thread.join(timeout=2.0)\n        return\
+      \ super().stop()\n"
+    affinity: ''
+    alias: ''
+    camera_index: '0'
+    comment: ''
+    fps_target: '60'
+    frame_height: '480'
+    frame_skip: '1'
+    frame_width: '640'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('LiveVideoTransmitter_HiPerf', 'LiveVideoTransmitter', [('camera_index',
+      '0'), ('frame_width', '640'), ('frame_height', '480'), ('fps_target', '60'),
+      ('frame_skip', '1')], [], [('0', 'byte', 1)], '\n    Ultra high-performance
+      webcam video transmitter for 480p @ 60fps\n    Optimized for maximum throughput
+      with minimal overhead\n    ', ['camera_index', 'fps_target', 'frame_height',
+      'frame_skip', 'frame_width'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [48, 275]
+    rotation: 0
+    state: enabled
+- name: qtgui_freq_sink_x_0
+  id: qtgui_freq_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    average: '1.0'
+    axislabels: 'True'
+    bw: samp_rate
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    ctrlpanel: 'False'
+    fc: '0'
+    fftsize: '2048'
+    freqhalf: 'True'
+    grid: 'False'
+    gui_hint: ''
+    label: Relative Gain
+    label1: TX Spectrum
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: TX Spectrum
+    nconnections: '1'
+    showports: 'False'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_tag: '""'
+    type: complex
+    units: dB
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    wintype: firdes.WIN_BLACKMAN_hARRIS
+    ymax: '10'
+    ymin: '-140'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848, 12]
+    rotation: 0
+    state: disabled
+- name: video_sdl_sink_0
+  id: video_sdl_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    display_height: '480'
+    display_width: '640'
+    fps: '60'
+    height: '480'
+    num_channels: '1'
+    type: byte
+    width: '640'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1415, 203]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_stream_to_tagged_stream_0, '0', digital_ofdm_tx_0, '0']
+- [blocks_throttle_0, '0', digital_ofdm_rx_0, '0']
+- [digital_ofdm_rx_0, '0', video_sdl_sink_0, '0']
+- [digital_ofdm_tx_0, '0', blocks_throttle_0, '0']
+- [digital_ofdm_tx_0, '0', qtgui_freq_sink_x_0, '0']
+- [epy_block_0, '0', blocks_stream_to_tagged_stream_0, '0']
+
+metadata:
+  file_format: 1
