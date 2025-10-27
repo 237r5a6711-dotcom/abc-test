@@ -24,10 +24,10 @@ A complete, production-ready video streaming system for real-time transmission o
 
 ```bash
 # Install required packages
-pip install opencv-python numpy
+python -m pip install opencv-python numpy
 
 # Or using the requirements file
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### Hardware

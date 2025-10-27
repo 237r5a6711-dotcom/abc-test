@@ -19,7 +19,7 @@ A complete, production-ready Python implementation that works out-of-the-box wit
 ### 🚀 Quick Start:
 ```bash
 cd video_streaming_solution
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python transmitter.py  # Terminal 1
 python receiver.py     # Terminal 2
 ```
@@ -123,7 +123,7 @@ gnuradio-companion ofdm_video_480p_60fps.grc
 
 2. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   python -m pip install -r requirements.txt
    ```
 
 3. Run the test script:

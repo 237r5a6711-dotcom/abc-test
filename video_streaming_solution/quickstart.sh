@@ -23,7 +23,7 @@ echo "Checking requirements..."
 python3 -c "import cv2" 2>/dev/null
 if [ $? -ne 0 ]; then
     echo "OpenCV not found. Installing requirements..."
-    pip3 install -r requirements.txt
+    python3 -m pip install -r requirements.txt
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to install requirements"
         exit 1

@@ -25,7 +25,7 @@ echo Checking requirements...
 python -c "import cv2" >nul 2>&1
 if errorlevel 1 (
     echo OpenCV not found. Installing requirements...
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     if errorlevel 1 (
         echo ERROR: Failed to install requirements
         pause

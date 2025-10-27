@@ -91,7 +91,7 @@ System verification that checks:
 cd video_streaming_solution
 
 # Install dependencies (takes 1-2 minutes)
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### Running the Solution
@@ -349,7 +349,7 @@ The code is **production-ready** and can be used immediately for real video stre
 
 ```bash
 cd video_streaming_solution
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python test_system.py
 python transmitter.py  # Terminal 1
 python receiver.py     # Terminal 2
